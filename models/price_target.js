@@ -18,6 +18,17 @@ const priceTargetSchema = new Schema({
   },
 });
 
+const autoPopulateCompany = function (next) {
+  this.populate("company");
+  next();
+};
+
+priceTargetSchema
+  .pre("find", autoPopulateCompany)
+  .pre("findOne", autoPopulateCompany);
+
+// priceTargetSchema.post("save", autoPopulateCompany);
+
 // Export
 const PriceTarget = mongoose.model("PriceTarget", priceTargetSchema);
 export default PriceTarget;

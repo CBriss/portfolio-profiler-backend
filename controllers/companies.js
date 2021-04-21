@@ -11,6 +11,7 @@ export const createCompany = async (req, res) => {
 
 export const getCompanies = async (req, res) => {
   Company.find()
+    .sort("name")
     .then((companies) => res.status(200).json(companies))
     .catch((error) => {
       res.status(440).json(`Error Grabbing Companies! ${error}`);
@@ -44,7 +45,7 @@ export const listCompanies = async (req, res) => {
   Company.find({})
     .sort("name")
     .then((companies) => {
-      result = {};
+      let result = {};
       for (let i = 0; i < companies.length; i++) {
         let company = companies[i];
         result[company.name] = company._id;
